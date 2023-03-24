@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 #from .models import *
-from .models import Candidates,Company
+from .models import Candidates,Vacancy
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,logout,authenticate
 #from .forms import *
@@ -9,15 +9,15 @@ from .forms import ApplyForm
 # Create your views here.
 def home(request):
     if request.user.is_authenticated:
-        candidates=Candidates.objects.filter(company__user_id=request.user.id)
+        candidates=Candidates.objects.filter(vacancy__user_id=request.user.id)
         context={
             'candidates':candidates,
         }
         return render(request,'hr.html',context)
     else:
-        companies=Company.objects.all()
+        vacancies=Vacancy.objects.all()
         context={
-            'companies':companies,
+            'vacancies':vacancies,
         }
         return render(request,'Jobseeker.html',context)
 
@@ -48,7 +48,7 @@ def registerUser(request):
             Form=UserCreationForm(request.POST)
             if Form.is_valid():
                 currUser=Form.save()
-                Company.objects.create(user=currUser,name=currUser.username)
+                Vacancy.objects.create(user=currUser,name=currUser.username)
                 return redirect('login')
         context={
             'form':Form
