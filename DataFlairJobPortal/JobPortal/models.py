@@ -1,10 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from users.models import CustomUser
+
 
 # Create your models here.
 
 class Vacancy(models.Model):
-    user=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
+    user=models.ForeignKey(CustomUser,null=True,on_delete=models.CASCADE)
     name=models.CharField(max_length=200,null=True)
     position=models.CharField(max_length=200,null=True)
     description=models.CharField(max_length=4000,null=True)

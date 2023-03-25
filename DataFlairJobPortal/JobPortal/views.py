@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 #from .models import *
 from .models import Candidates,Vacancy
-from django.contrib.auth.forms import UserCreationForm
+#from django.contrib.auth.forms import UserCreationForm
+from users.forms import UserCreationForm
 from django.contrib.auth import login,logout,authenticate
 #from .forms import *
 from .forms import ApplyForm
@@ -31,9 +32,9 @@ def loginUser(request):
         return redirect('home')
     else:
        if request.method=="POST":
-        name=request.POST.get('username')
+        name=request.POST.get('email')
         pwd=request.POST.get('password')
-        user=authenticate(request,username=name,password=pwd)
+        user=authenticate(request,email=name,password=pwd)
         if user is not None:
             login(request,user)
             return redirect('home')

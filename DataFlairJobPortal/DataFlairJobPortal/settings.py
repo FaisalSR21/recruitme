@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'JobPortal.apps.JobportalConfig',
+    'users',
 
 ]
+AUTH_USER_MODEL = "users.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -130,6 +132,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 MEDIA_URL = '/media/'
 
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'templates/static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'templates/static')
+# ]
