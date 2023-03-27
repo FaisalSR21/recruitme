@@ -1,18 +1,27 @@
 from django.shortcuts import render,redirect
 #from .models import *
-from .models import Candidates,Vacancy
+from .models import Candidate,Vacancy
 #from django.contrib.auth.forms import UserCreationForm
-from users.forms import UserCreationForm
+#from users.forms import UserCreationForm
+from users.forms import CustomUserCreationForm
 from django.contrib.auth import login,logout,authenticate
 #from .forms import *
 from .forms import ApplyForm
 
 # Create your views here.
+def seekerReg(request):
+
+    return render(request,'seekerReg.html')
+
+def recruiterReg(request):
+
+    return render(request,'recruiterReg.html')
+
 def home(request):
     if request.user.is_authenticated:
-        candidates=Candidates.objects.filter(vacancy__user_id=request.user.id)
+        candidate=Candidate.objects.filter(vacancy__user_id=request.user.id)
         context={
-            'candidates':candidates,
+            'candidate':candidate,
         }
         return render(request,'hr.html',context)
     else:
@@ -32,9 +41,9 @@ def loginUser(request):
         return redirect('home')
     else:
        if request.method=="POST":
-        name=request.POST.get('email')
+        email=request.POST.get('email')
         pwd=request.POST.get('password')
-        user=authenticate(request,email=name,password=pwd)
+        user=authenticate(request,email=email,password=pwd)
         if user is not None:
             login(request,user)
             return redirect('home')
@@ -44,12 +53,11 @@ def registerUser(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
-        Form=UserCreationForm()
+        Form=CustomUserCreationForm()
         if request.method=='POST':
-            Form=UserCreationForm(request.POST)
+            Form=CustomUserCreationForm(request.POST)
             if Form.is_valid():
-                currUser=Form.save()
-                Vacancy.objects.create(user=currUser,name=currUser.username)
+                Form.save()
                 return redirect('login')
         context={
             'form':Form

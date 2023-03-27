@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib import admin
 #from .views import *
-from .views import home,loginUser,logoutUser,registerUser,applyPage
+from .views import home,loginUser,logoutUser,registerUser,applyPage,recruiterReg,seekerReg
 
 
 urlpatterns = [
@@ -9,6 +9,8 @@ urlpatterns = [
     path('',home,name='home'),
     path('login/',loginUser,name='login'),
     path('logout/',logoutUser,name='logout'),
+    path('register/recruiter',recruiterReg),
+    path('register/seeker/',seekerReg),
     path('register/',registerUser,name='register'),
     path('apply/',applyPage,name='apply'),
 ]

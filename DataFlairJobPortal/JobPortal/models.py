@@ -13,11 +13,13 @@ class Vacancy(models.Model):
     salary=models.IntegerField(null=True)
     experience=models.IntegerField(null=True)
     Location=models.CharField(max_length=2000,null=True)
+    class Meta:
+        verbose_name_plural = "vacancies"
     def __str__(self):
         return self.name
 
 
-class Candidates(models.Model):
+class Candidate(models.Model):
     category=(
         ('Male','male'),
         ('Female','female'),

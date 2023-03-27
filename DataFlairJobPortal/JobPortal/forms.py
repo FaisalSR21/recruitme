@@ -3,5 +3,5 @@ from .models import *
 
 class ApplyForm(ModelForm):
     class Meta:
-        model=Candidates
+        model=Candidate
         fields="__all__"
