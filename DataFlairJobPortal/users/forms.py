@@ -7,7 +7,21 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ("email","first_name","surname","user_type","location","date_of_birth","location")
+        fields = ("email","first_name","surname","user_type","location","date_of_birth")
+
+
+class RecruiterCreationForm(UserCreationForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ("email","first_name","surname","user_type","location","date_of_birth")
+
+
+class SeekerCreationForm(UserCreationForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ("email","first_name","surname","user_type","location","date_of_birth")
 
 
 
@@ -15,4 +29,4 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = CustomUser
-        fields = ("email","first_name","surname","user_type","location","date_of_birth","location")
+        fields = ("email","first_name","surname","user_type","location","date_of_birth")

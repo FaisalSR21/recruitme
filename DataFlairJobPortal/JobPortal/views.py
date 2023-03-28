@@ -3,33 +3,62 @@ from django.shortcuts import render,redirect
 from .models import Candidate,Vacancy
 #from django.contrib.auth.forms import UserCreationForm
 #from users.forms import UserCreationForm
-from users.forms import CustomUserCreationForm
+from users.forms import CustomUserCreationForm,RecruiterCreationForm,SeekerCreationForm
 from django.contrib.auth import login,logout,authenticate
 #from .forms import *
 from .forms import ApplyForm
 
 # Create your views here.
 def seekerReg(request):
-
-    return render(request,'seekerReg.html')
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        Form=SeekerCreationForm()
+        if request.method=='POST':
+            Form=SeekerCreationForm(request.POST)
+            print(Form.errors)
+            if Form.is_valid():
+                Form.save()
+                return redirect('login')
+        context={
+            'form':Form
+        }
+    return render(request,'seekerReg.html',context)
 
 def recruiterReg(request):
-
-    return render(request,'recruiterReg.html')
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        Form=RecruiterCreationForm()
+        if request.method=='POST':
+            Form=RecruiterCreationForm(request.POST)
+            print(Form.errors)
+            if Form.is_valid():
+                Form.save()
+                return redirect('login')
+        context={
+            'form':Form
+        }
+    return render(request,'recruiterReg.html',context)
 
 def home(request):
     if request.user.is_authenticated:
-        candidate=Candidate.objects.filter(vacancy__user_id=request.user.id)
-        context={
+        if request.user.user_type =="Recruiter":
+            candidate=Candidate.objects.filter(vacancy__user_id=request.user.id)
+            context={
             'candidate':candidate,
-        }
-        return render(request,'hr.html',context)
+            }
+            return render(request,'Jobseeker.html',context)
+        else:
+            vacancies=Vacancy.objects.all()
+            context={
+                'vacancies':vacancies,
+                }
+            return render(request,'Jobseeker.html',context)
     else:
-        vacancies=Vacancy.objects.all()
-        context={
-            'vacancies':vacancies,
-        }
-        return render(request,'Jobseeker.html',context)
+        return render(request,'home.html')
+
+
 
 def logoutUser(request):
     logout(request)

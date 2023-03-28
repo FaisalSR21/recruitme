@@ -1,1 +1,55 @@
-<h1>Hello Seeker</h1>
+{% extends 'main.html' %}
+{% load static%}
+
+{% block content %}
+<head>
+    <style>
+        .maindiv{
+            border:1px solid black;
+        }
+        .errorlist{
+            color: red;
+        }
+    </style>
+</head>
+<div class="maindiv jumbotron container">
+
+    <form method="POST"  action="">
+        {% csrf_token %}
+        <table class="table table-hover">
+            <tr>
+                <td>email</td>
+                <td><input type="text" name="email" id="id_email" /></td>
+            </tr>
+            <tr>
+                <td>first_name</td>
+                <td><input type="text" name="first_name" id="id_first_name" /></td>
+            </tr>
+            <tr>
+                <td>surname</td>
+                <td><input type="text" name="surname" id="id_surname" /></td>
+            </tr>
+            <tr>
+                <td>location</td>
+                <td><input type="text" name="location" id="id_location" /></td>
+            </tr>
+            <tr>
+                <td>date_of_birth</td>
+                <td><input type="text" name="date_of_birth" id="id_date_of_birth" /></td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td><input type="password" name="password1" id="id_password1" /></td>
+            </tr>
+             <tr>
+                <td>repeat password</td>
+                <td><input type="password" name="password2" id="id_password2" /></td>
+            </tr>
+            </table>
+        <input type="hidden" name="user_type" id="id_user_type" value="Seeker" />
+        <input class="btn btn-success btn-lg" type="submit" value="Register">
+        <p>Already have an account? <a href='{% url "login" %}'>Login</a></p>
+    </form>
+
+</div>
+{% endblock %}
